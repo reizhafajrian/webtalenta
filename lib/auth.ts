@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-server-import-in-page */
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { nanoid } from "nanoid";
@@ -15,7 +16,7 @@ interface UserJwtPayload {
  * it's valid or a response if it's not.
  */
 
-export async function verifyAuth(req) {
+export async function verifyAuth(req: NextRequest) {
   const token = req.cookies[USER_TOKEN];
   if (!token) {
     return jsonResponse(401, {
@@ -43,7 +44,7 @@ export async function verifyAuth(req) {
 /**
  * Adds the user token cookie to a response.
  */
-export async function getUser(request: NextRequest, response: NextResponse) {
+export async function getUser(request: NextRequest) {
   const user = await verifyAuth(request)
     .then((user) => {
       return user.json();
